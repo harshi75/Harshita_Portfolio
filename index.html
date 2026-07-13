@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harshita Singh — AI/ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A1628;
+    --bg-elevated:#101E36;
+    --bg-card:#0D1B31;
+    --ink:#EAF0F8;
+    --ink-dim:#8FA0BC;
+    --ink-faint:#5C6B85;
+    --teal:#45C4B0;
+    --teal-dim:rgba(69,196,176,0.14);
+    --amber:#F4A94B;
+    --line:rgba(234,240,248,0.10);
+    --line-strong:rgba(234,240,248,0.18);
+    --radius:10px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--teal-dim);color:var(--ink);}
+
+  a{color:inherit;text-decoration:none;}
+  .display{font-family:'Space Grotesk',sans-serif;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:22px 32px;
+    background:rgba(10,22,40,0.72);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    gap:24px;
+  }
+  nav .brand{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;letter-spacing:0.02em;}
+  nav .brand span{color:var(--teal);}
+  nav ul{display:flex;list-style:none;gap:30px;}
+  nav ul li a{
+    font-size:13px;font-family:'IBM Plex Mono',monospace;
+    color:var(--ink-dim);letter-spacing:0.03em;
+    transition:color .2s ease;
+  }
+  nav ul li a:hover{color:var(--teal);}
+  .nav-social{display:flex;gap:10px;}
+  .nav-social a{
+    width:32px;height:32px;border-radius:50%;
+    border:1px solid var(--line-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    color:var(--ink-dim);letter-spacing:0.02em;
+    transition:all .2s ease;
+  }
+  .nav-social a:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-dim);}
+  .nav-toggle{display:none;background:none;border:none;color:var(--ink);font-size:22px;cursor:pointer;}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding-top:80px;
+    overflow:hidden;
+  }
+  #graph-canvas{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    z-index:0;
+    opacity:0.9;
+  }
+  .hero-inner{position:relative;z-index:2;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--teal);
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    margin-bottom:22px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{
+    content:'';width:22px;height:1px;background:var(--teal);
+  }
+  h1.hero-name{
+    font-size:clamp(42px,7vw,84px);
+    font-weight:700;
+    letter-spacing:-0.02em;
+    line-height:1.02;
+    margin-bottom:18px;
+  }
+  h1.hero-name .last{color:var(--teal);}
+  .hero-role{
+    font-size:clamp(17px,2vw,22px);
+    color:var(--ink-dim);
+    font-weight:400;
+    max-width:620px;
+    margin-bottom:36px;
+  }
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:56px;}
+  .btn{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    padding:13px 24px;
+    border-radius:6px;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:all .2s ease;
+    border:1px solid var(--line-strong);
+  }
+  .btn-primary{
+    background:var(--teal);
+    color:#052824;
+    font-weight:500;
+    border-color:var(--teal);
+  }
+  .btn-primary:hover{background:#5AD4C1;transform:translateY(-1px);}
+  .btn-ghost{
+    color:var(--ink);
+    background:transparent;
+  }
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal);}
+
+  .hero-stats{
+    display:flex;gap:44px;flex-wrap:wrap;
+    padding-top:32px;
+    border-top:1px solid var(--line);
+    max-width:760px;
+  }
+  .stat .num{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:26px;font-weight:600;color:var(--ink);
+  }
+  .stat .num span{color:var(--amber);}
+  .stat .label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;color:var(--ink-faint);
+    letter-spacing:0.04em;text-transform:uppercase;margin-top:4px;
+  }
+
+  .scroll-cue{
+    position:absolute;bottom:36px;left:32px;z-index:2;
+    display:flex;align-items:center;gap:10px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;
+    color:var(--ink-faint);letter-spacing:0.08em;
+  }
+  .scroll-cue .line{width:1px;height:34px;background:linear-gradient(var(--ink-faint),transparent);}
+
+  /* SECTION SHARED */
+  section{padding:110px 0;position:relative;}
+  .section-head{margin-bottom:52px;}
+  .section-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--teal);letter-spacing:0.1em;
+    margin-bottom:10px;display:block;
+  }
+  h2.section-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(26px,3.4vw,36px);
+    font-weight:600;letter-spacing:-0.01em;
+  }
+  .section-sub{color:var(--ink-dim);max-width:560px;margin-top:12px;font-size:15px;}
+
+  /* ABOUT */
+  #about{border-top:1px solid var(--line);}
+  .about-grid{
+    display:grid;grid-template-columns:1.3fr 1fr;gap:60px;align-items:start;
+  }
+  .about-text p{color:var(--ink-dim);font-size:16px;margin-bottom:18px;max-width:520px;}
+  .about-text p strong{color:var(--ink);font-weight:500;}
+  .fact-list{
+    border-top:1px solid var(--line);
+  }
+  .fact{
+    display:flex;justify-content:space-between;gap:20px;
+    padding:16px 0;border-bottom:1px solid var(--line);
+    font-size:14px;
+  }
+  .fact .k{color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:0.03em;}
+  .fact .v{color:var(--ink);text-align:right;max-width:280px;}
+
+  /* SKILLS */
+  #skills{background:var(--bg-elevated);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .skill-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:36px 32px;}
+  .skill-group .group-title{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;color:var(--amber);letter-spacing:0.06em;
+    text-transform:uppercase;margin-bottom:14px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .skill-group .group-title::before{
+    content:'';width:6px;height:6px;border-radius:50%;background:var(--amber);
+  }
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .pill{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    padding:7px 12px;
+    border:1px solid var(--line-strong);
+    border-radius:20px;
+    color:var(--ink-dim);
+    background:rgba(234,240,248,0.02);
+    transition:all .2s ease;
+  }
+  .pill:hover{border-color:var(--teal);color:var(--teal);}
+
+  /* EXPERIENCE */
+  #experience{border-bottom:1px solid var(--line);}
+  .timeline{position:relative;padding-left:32px;}
+  .timeline::before{
+    content:'';position:absolute;left:5px;top:6px;bottom:6px;width:1px;
+    background:linear-gradient(var(--teal),var(--line) 90%);
+  }
+  .tl-item{position:relative;padding-bottom:44px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:'';position:absolute;left:-32px;top:5px;
+    width:11px;height:11px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--teal);
+  }
+  .tl-date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--teal);letter-spacing:0.03em;margin-bottom:6px;display:block;}
+  .tl-role{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600;margin-bottom:2px;}
+  .tl-org{color:var(--ink-dim);font-size:14px;margin-bottom:14px;}
+  .tl-item ul{list-style:none;max-width:640px;}
+  .tl-item li{
+    position:relative;padding-left:18px;margin-bottom:8px;
+    color:var(--ink-dim);font-size:14.5px;
+  }
+  .tl-item li::before{content:'—';position:absolute;left:0;color:var(--ink-faint);}
+
+  /* PROJECTS */
+  #projects{background:var(--bg-elevated);}
+  .project-list{display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .project{
+    background:var(--bg-card);
+    padding:36px;
+    display:grid;grid-template-columns:0.9fr 1.4fr;gap:32px;
+  }
+  .project-left .p-num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-faint);margin-bottom:10px;display:block;}
+  .p-title{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;margin-bottom:12px;line-height:1.25;}
+  .p-links{display:flex;gap:10px;flex-wrap:wrap;}
+  .p-links a{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;
+    padding:8px 14px;border:1px solid var(--line-strong);border-radius:6px;
+    display:inline-flex;align-items:center;gap:6px;color:var(--ink-dim);
+    transition:all .2s ease;
+  }
+  .p-links a:hover{border-color:var(--teal);color:var(--teal);}
+  .p-desc{color:var(--ink-dim);font-size:14.5px;margin-bottom:16px;}
+  .stack-row{display:flex;flex-wrap:wrap;gap:7px;}
+  .stack-tag{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;
+    color:var(--ink-faint);
+    padding:4px 9px;border:1px solid var(--line);border-radius:4px;
+  }
+  .p-highlight{
+    margin-top:14px;padding:12px 14px;
+    background:var(--teal-dim);border-left:2px solid var(--teal);
+    border-radius:4px;font-size:13px;color:var(--ink);
+    font-family:'IBM Plex Mono',monospace;
+  }
+
+  /* ACHIEVEMENTS */
+  .ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .ach-card{
+    border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px;background:var(--bg-card);
+  }
+  .ach-card .a-mark{color:var(--amber);font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;margin-bottom:10px;display:block;}
+  .ach-card p{font-size:14px;color:var(--ink-dim);}
+  .pub-note{
+    margin-top:28px;padding:20px 24px;border:1px solid var(--line);border-radius:var(--radius);
+    display:flex;gap:16px;align-items:flex-start;background:var(--bg-card);
+  }
+  .pub-note .p-mono{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:0.05em;white-space:nowrap;padding-top:3px;}
+  .pub-note p{font-size:14px;color:var(--ink-dim);}
+  .pub-note strong{color:var(--ink);font-weight:500;}
+
+  /* CONTACT / FOOTER */
+  #contact{border-top:1px solid var(--line);}
+  .contact-inner{
+    display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:40px;
+  }
+  .contact-title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:clamp(30px,4.5vw,52px);font-weight:600;letter-spacing:-0.01em;
+    max-width:560px;margin-bottom:24px;
+  }
+  .contact-title .teal{color:var(--teal);}
+  .contact-links{display:flex;flex-direction:column;gap:14px;}
+  .contact-links a{
+    font-family:'IBM Plex Mono',monospace;font-size:14px;
+    color:var(--ink-dim);display:flex;align-items:center;gap:10px;
+    transition:color .2s ease;
+  }
+  .contact-links a:hover{color:var(--teal);}
+  .contact-links a::before{content:'→';color:var(--teal);}
+  footer{
+    margin-top:90px;padding-top:24px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--ink-faint);
+  }
+
+  @media (max-width:860px){
+    .about-grid{grid-template-columns:1fr;gap:36px;}
+    .skill-groups{grid-template-columns:1fr 1fr;}
+    .project{grid-template-columns:1fr;}
+    .ach-grid{grid-template-columns:1fr;}
+    nav ul{display:none;}
+  }
+  @media (max-width:480px){
+    .nav-social{display:none;}
+  }
+  @media (max-width:560px){
+    .skill-groups{grid-template-columns:1fr;}
+    .hero-stats{gap:28px;}
+    .wrap{padding:0 20px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    #graph-canvas{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">HARSHITA<span>.</span>SINGH</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-social">
+    <a href="https://github.com/harshi75" target="_blank" aria-label="GitHub">GH</a>
+    <a href="https://www.linkedin.com/in/harshita-singh-561291362/" target="_blank" aria-label="LinkedIn">IN</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <canvas id="graph-canvas"></canvas>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">AI / ML Engineer Intern</div>
+    <h1 class="hero-name">Harshita<br><span class="last">Singh</span></h1>
+    <p class="hero-role">I build graph neural networks, NLP pipelines, and deep learning systems — turning raw data into models that ship, from recommendation engines to diagnostic tools.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#projects">View Projects ↓</a>
+      <a class="btn btn-ghost" href="Harshita_Singh_Resume.pdf" target="_blank">Download Resume</a>
+      <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="num"><span>3</span></div><div class="label">Shipped ML Systems</div></div>
+      <div class="stat"><div class="num">1<span>st</span></div><div class="label">Place, HackGenitra 2025</div></div>
+      <div class="stat"><div class="num"><span>300</span>+</div><div class="label">DSA Problems Solved</div></div>
+      <div class="stat"><div class="num">8.3</div><div class="label">CGPA / 10</div></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>SCROLL</span><div class="line"></div></div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">01 — About</span>
+      <h2 class="section-title">Grounded in the fundamentals,<br>building toward the frontier.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p><strong>B.Tech CSE (AI &amp; ML)</strong> student with a strong foundation in statistics, linear algebra, and data structures. I like taking a model from notebook to something a real user can click through — which is why every project below ships with a live interface, not just a repo.</p>
+        <p>Currently sharpening that foundation with a drive to learn advanced neural network architectures from industry-leading scientists, while interning across recommendation systems, churn prediction, and mentor-guided ML delivery.</p>
+      </div>
+      <div class="fact-list">
+        <div class="fact"><span class="k">EDUCATION</span><span class="v">B.Tech CSE (AI &amp; ML), Dr. A.P.J. Abdul Kalam Technical University</span></div>
+        <div class="fact"><span class="k">TIMELINE</span><span class="v">2023 – 2027</span></div>
+        <div class="fact"><span class="k">CGPA</span><span class="v">8.3 / 10</span></div>
+        <div class="fact"><span class="k">SCHOOLING</span><span class="v">CBSE, S G R M School, Bareilly, UP — 93.2% (XII) / 90.8% (X)</span></div>
+        <div class="fact"><span class="k">FOCUS</span><span class="v">Generative AI, NLP Systems, GNNs</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">02 — Skills</span>
+      <h2 class="section-title">The stack behind the systems.</h2>
+      <p class="section-sub">Grouped by where they show up in the work — not just a wall of keywords.</p>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <div class="group-title">Languages</div>
+        <div class="pill-row">
+          <span class="pill">Python</span><span class="pill">C++</span><span class="pill">Java</span><span class="pill">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="group-title">ML / Deep Learning</div>
+        <div class="pill-row">
+          <span class="pill">TensorFlow</span><span class="pill">PyTorch</span><span class="pill">Scikit-Learn</span><span class="pill">Keras</span><span class="pill">XGBoost</span><span class="pill">GNNs</span><span class="pill">Recommender Systems</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="group-title">Core ML Concepts</div>
+        <div class="pill-row">
+          <span class="pill">Regression</span><span class="pill">Decision Trees / Random Forests</span><span class="pill">Gradient Boosting</span><span class="pill">CNNs / RNNs</span><span class="pill">Clustering</span><span class="pill">PCA</span><span class="pill">Hyperparameter Tuning</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="group-title">NLP</div>
+        <div class="pill-row">
+          <span class="pill">Transformers</span><span class="pill">Embeddings</span><span class="pill">NER</span><span class="pill">Text Classification</span><span class="pill">LLMs</span><span class="pill">RAG</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="group-title">Data &amp; Analysis</div>
+        <div class="pill-row">
+          <span class="pill">Pandas</span><span class="pill">Polars</span><span class="pill">NumPy</span><span class="pill">Feature Engineering</span><span class="pill">EDA</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="group-title">Web, Cloud &amp; Tools</div>
+        <div class="pill-row">
+          <span class="pill">React</span><span class="pill">FastAPI</span><span class="pill">PostgreSQL</span><span class="pill">REST APIs</span><span class="pill">AWS SageMaker</span><span class="pill">Docker</span><span class="pill">Git</span><span class="pill">Streamlit</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">03 — Experience</span>
+      <h2 class="section-title">Where the work has happened.</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <span class="tl-date mono">JUNE 2026 — JULY 2026</span>
+        <div class="tl-role">AI/ML Intern</div>
+        <div class="tl-org">Saiket Systems</div>
+        <ul>
+          <li>Developed a Graph Neural Network (GNN) recommendation system using PyTorch Geometric, optimizing graph embeddings to improve product recommendation coverage by 15%.</li>
+          <li>Built and deployed a Random Forest classification model to predict customer churn for a major Indian retailer, improving customer retention by 15%.</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <span class="tl-date mono">MAY 2026 — PRESENT</span>
+        <div class="tl-role">AI/ML Intern</div>
+        <div class="tl-org">SURE Trust</div>
+        <ul>
+          <li>Delivered 5+ mentor-validated mini-projects covering data pipeline design, EDA, feature engineering, and ML model development (regression, classification, clustering).</li>
+          <li>Achieved a 90%+ mentor approval rate across project milestones by meeting industry-standard benchmarks for correctness, performance, and documentation.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">04 — Projects</span>
+      <h2 class="section-title">Three systems, end to end.</h2>
+      <p class="section-sub">Each one went from dataset to a deployed interface someone else can actually use.</p>
+    </div>
+    <div class="project-list">
+
+      <div class="project">
+        <div class="project-left">
+          <span class="p-num mono">01</span>
+          <div class="p-title">DiseaseDetectAI<br>AI Healthcare Diagnostic System</div>
+          <div class="p-links">
+            <a href="https://github.com/harshi75/Disease_Detect_AI" target="_blank">↗ GitHub</a>
+            <a href="https://disease-detect-ai.streamlit.app" target="_blank">↗ Live Demo</a>
+          </div>
+        </div>
+        <div class="project-right">
+          <p class="p-desc">A multi-model ensemble classification pipeline (CNN + Random Forest + XGBoost + Naive Bayes) for symptom-based disease and skin disease prediction, achieving ~95% accuracy across a dataset of 700+ diseases. Deployed as an interactive Streamlit diagnostic interface.</p>
+          <div class="stack-row">
+            <span class="stack-tag">Python</span><span class="stack-tag">TensorFlow</span><span class="stack-tag">PyTorch</span><span class="stack-tag">CNN</span><span class="stack-tag">XGBoost</span><span class="stack-tag">Scikit-Learn</span><span class="stack-tag">Streamlit</span>
+          </div>
+          <div class="p-highlight">Paper accepted at ICETA 2026 — International Conference on Emerging Technologies and Applications.</div>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-left">
+          <span class="p-num mono">02</span>
+          <div class="p-title">SmartHire AI<br>Intelligent Recruitment Automation</div>
+          <div class="p-links">
+            <a href="https://github.com/harshi75/Smart-Hire-AI" target="_blank">↗ GitHub</a>
+          </div>
+        </div>
+        <div class="project-right">
+          <p class="p-desc">An end-to-end AI recruitment pipeline with transformer-based resume parsing, semantic candidate ranking, automated skill-gap analysis, and learning roadmap generation — cutting manual screening time by 60%.</p>
+          <div class="stack-row">
+            <span class="stack-tag">NLP</span><span class="stack-tag">Transformers</span><span class="stack-tag">Semantic Ranking</span><span class="stack-tag">React</span><span class="stack-tag">FastAPI</span><span class="stack-tag">PostgreSQL</span>
+          </div>
+          <div class="p-highlight">🏆 1st Place, HackGenitra 2025 — out of 50+ competing teams.</div>
+        </div>
+      </div>
+
+      <div class="project">
+        <div class="project-left">
+          <span class="p-num mono">03</span>
+          <div class="p-title">Global Ocean Temperature Analytics<br>Climate Data Dashboard</div>
+          <div class="p-links">
+            <a href="https://github.com/harshi75/Global_Ocean_Temperature_Analytics" target="_blank">↗ GitHub</a>
+            <a href="https://globaloceantemperatureanalytics75.streamlit.app" target="_blank">↗ Live Demo</a>
+          </div>
+        </div>
+        <div class="project-right">
+          <p class="p-desc">An interactive climate analytics dashboard processing 33M+ ocean temperature records from NOAA ERSST v5 — implementing temperature anomaly detection, decadal trend analysis, and ocean hotspot identification.</p>
+          <div class="stack-row">
+            <span class="stack-tag">Python</span><span class="stack-tag">Polars</span><span class="stack-tag">Xarray</span><span class="stack-tag">Plotly</span><span class="stack-tag">Streamlit</span><span class="stack-tag">NOAA ERSST v5</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num">05 — Recognition</span>
+      <h2 class="section-title">Milestones along the way.</h2>
+    </div>
+    <div class="ach-grid">
+      <div class="ach-card">
+        <span class="a-mark">01</span>
+        <p><strong style="color:var(--ink);font-weight:500;">1st Place, HackGenitra 2025</strong> — outperformed 50+ teams with an NLP-driven AI recruitment automation system.</p>
+      </div>
+      <div class="ach-card">
+        <span class="a-mark">02</span>
+        <p><strong style="color:var(--ink);font-weight:500;">3 end-to-end AI/ML systems</strong> delivered across healthcare diagnostics, HR automation, and climate data analytics.</p>
+      </div>
+      <div class="ach-card">
+        <span class="a-mark">03</span>
+        <p><strong style="color:var(--ink);font-weight:500;">300+ DSA problems</strong> solved on LeetCode — the fundamentals behind the model code.</p>
+      </div>
+    </div>
+    <div class="pub-note">
+      <span class="p-mono">PUBLICATION</span>
+      <p><strong>"AI-Powered Healthcare Diagnostics via Deep Learning &amp; Multi-Model Ensemble Methods"</strong> — Under Review, ICETA 2026 (International Conference on Emerging Technologies and Applications).</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-inner">
+      <div>
+        <div class="contact-title">Let's build something <span class="teal">worth shipping.</span></div>
+        <a class="btn btn-primary" href="mailto:harshita753357@gmail.com">Say Hello ↗</a>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:harshita753357@gmail.com">harshita753357@gmail.com</a>
+        <a href="tel:+918077054854">+91-80770 54854</a>
+        <a href="https://github.com/harshi75" target="_blank">github.com/harshi75</a>
+        <a href="https://www.linkedin.com/in/harshita-singh-561291362/" target="_blank">linkedin.com/in/harshita-singh</a>
+        <a href="Harshita_Singh_Resume.pdf" target="_blank">Download Resume (PDF)</a>
+      </div>
+    </div>
+    <footer>
+      <span>© 2026 Harshita Singh</span>
+      <span>Built with data, not templates.</span>
+    </footer>
+  </div>
+</section>
+
+<script>
+  // Node-graph hero animation — echoes GNN-style embedding graphs
+  const canvas = document.getElementById('graph-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, nodes = [];
+  const NODE_COUNT_BASE = 46;
+  const MAX_DIST = 150;
+
+  function resize(){
+    W = canvas.width = canvas.offsetWidth * devicePixelRatio;
+    H = canvas.height = canvas.offsetHeight * devicePixelRatio;
+    canvas.style.width = canvas.offsetWidth + 'px';
+    ctx.setTransform(1,0,0,1,0,0);
+  }
+
+  function initNodes(){
+    nodes = [];
+    const area = canvas.offsetWidth * canvas.offsetHeight;
+    const count = Math.min(70, Math.max(28, Math.floor(area / 22000)));
+    for(let i=0;i<count;i++){
+      nodes.push({
+        x: Math.random()*canvas.offsetWidth,
+        y: Math.random()*canvas.offsetHeight,
+        vx: (Math.random()-0.5)*0.18,
+        vy: (Math.random()-0.5)*0.18,
+        r: Math.random()*1.6+1.2
+      });
+    }
+  }
+
+  let mouse = {x:-9999,y:-9999};
+  canvas.addEventListener('mousemove', e=>{
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = e.clientX - rect.left;
+    mouse.y = e.clientY - rect.top;
+  });
+  canvas.addEventListener('mouseleave', ()=>{ mouse.x=-9999; mouse.y=-9999; });
+
+  function draw(){
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+    ctx.clearRect(0,0,canvas.offsetWidth,canvas.offsetHeight);
+
+    const cw = canvas.offsetWidth, ch = canvas.offsetHeight;
+
+    for(const n of nodes){
+      n.x += n.vx; n.y += n.vy;
+      if(n.x<0||n.x>cw) n.vx*=-1;
+      if(n.y<0||n.y>ch) n.vy*=-1;
+    }
+
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const a=nodes[i], b=nodes[j];
+        const dx=a.x-b.x, dy=a.y-b.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<MAX_DIST){
+          const op = (1 - dist/MAX_DIST) * 0.35;
+          ctx.strokeStyle = `rgba(69,196,176,${op})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+      // connect to mouse
+      const dxm = nodes[i].x-mouse.x, dym = nodes[i].y-mouse.y;
+      const dm = Math.sqrt(dxm*dxm+dym*dym);
+      if(dm < 180){
+        ctx.strokeStyle = `rgba(244,169,75,${(1-dm/180)*0.5})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x,nodes[i].y);
+        ctx.lineTo(mouse.x,mouse.y);
+        ctx.stroke();
+      }
+    }
+    for(const n of nodes){
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle = 'rgba(234,240,248,0.55)';
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+
+  function setup(){
+    resize();
+    initNodes();
+  }
+  window.addEventListener('resize', setup);
+  setup();
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    requestAnimationFrame(draw);
+  }
+</script>
+
+</body>
+</html>
